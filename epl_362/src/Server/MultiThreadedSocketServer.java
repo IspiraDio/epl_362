@@ -334,8 +334,26 @@ public class MultiThreadedSocketServer {
 					    	out.println(transaction.insert_transaction());
 							out.flush();
 					    }
+					    else  if(cmd.equals("downloadClient")){	
+							  
+					    	Customer customer=new Customer();	  
+					    	out.println(customer.downdoled_clients(gson.fromJson(clientCommand,Customer.class).getCLIENT_ID()));
+							out.flush();
+					    }
+					    else  if(cmd.equals("getBranchMonthReport")){					    	
+					    	Reports reports=new Reports();					    	 	
+ 					    	out.println(reports.get_branch_month());
+							out.flush();
+					    }
+					    else  if(cmd.equals("getRecMonthReport")){					    	
+					    	Reports reports=new Reports();					    	 	
+ 					    	out.println(reports.get_client_rec_month(gson.fromJson(clientCommand,Customer.class).getCLIENT_ID()));
+							out.flush();
+					    }
 					    
-					   
+					    
+					    
+					    
 						
 						System.out.println("  Client Says :" + clientCommand);
 //						if (clientArgv[0].equalsIgnoreCase("quit")) {

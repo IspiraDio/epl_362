@@ -14,6 +14,7 @@ public class Recommendation {
 	
 	private String CLIENT_ID;
 	private String RECOMMENDATION;
+	private String MONTH;
 	
 	public Recommendation(){
 		
@@ -72,6 +73,8 @@ public class Recommendation {
 		
 		return "err";
 	}
+	
+	
 
 	public String getRECOMMENDATION() {
 		return RECOMMENDATION;
@@ -87,6 +90,14 @@ public class Recommendation {
 
 	public void setCLIENT_ID(String cLIENT_ID) {
 		CLIENT_ID = cLIENT_ID;
+	}
+
+	public String getMONTH() {
+		return MONTH;
+	}
+
+	public void setMONTH(String mONTH) {
+		MONTH = mONTH;
 	}
 
 }

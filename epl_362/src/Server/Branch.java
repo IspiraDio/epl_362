@@ -17,6 +17,7 @@ public class Branch {
 	private String STREET_NAME;
 	private String ZIP_CODE;
 	private String COUNTRY;
+ 
 
 	public Branch() {
 
@@ -31,6 +32,7 @@ public class Branch {
 		this.setCOUNTRY(COUNTRY);
 
 	}
+ 
 
 	public String insert_branch() {
  
@@ -208,6 +210,8 @@ public class Branch {
 
 		return "Delete branch succeeded";
 	}
+	
+	 
 
 	public String getBRANCH_ID() {
 		return BRANCH_ID;
@@ -248,5 +252,8 @@ public class Branch {
 	public void setCOUNTRY(String cOUNTRY) {
 		COUNTRY = cOUNTRY;
 	}
+
+	 
+ 
 
 }
