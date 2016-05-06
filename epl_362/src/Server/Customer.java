@@ -258,6 +258,54 @@ public class Customer {
 		
 		return "err";
 	}
+	
+	public String get_clients_not_attend(){
+		
+		Customer[] result= null;
+		String jsonout = null;
+		Gson gson = new Gson();
+		String jsonfinal = "";
+		Connection conn = null;
+		CallableStatement cstmt = null;
+		try {
+			conn = DBConnection.getDBConnection();
+			cstmt = conn.prepareCall("{call SP_CLIENT_NOT_ATTEND()}");
+
+			cstmt.execute();
+
+			ResultSet rs;
+			rs = (ResultSet) cstmt.getResultSet();
+			
+		 
+			ArrayList<Customer> arrayList = new ArrayList<Customer>();
+			while (rs.next()) {
+				arrayList.add(new Customer(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6)));
+			}
+			
+			result = (Customer[]) arrayList.toArray(new Customer[arrayList.size()]);
+			rs.close();
+
+			for(int i=0;i<result.length;i++){
+				jsonout = gson.toJson(result[i]);
+				jsonfinal = jsonfinal.concat(jsonout+"\n");
+			}
+			
+
+			return jsonfinal;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "err";
+	}
+	
 
 
 	public String getCLIENT_ID() {

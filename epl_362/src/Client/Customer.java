@@ -24,6 +24,21 @@ public class Customer {
 		this.setPHONE_NUMBER(PHONE_NUMBER);
 		this.setEMAIL(EMAIL);
 	}
+	
+	public Customer(String COMANT,String CLIENT_ID){
+		this.setCOMANT(COMANT);
+		this.setCLIENT_ID(CLIENT_ID);
+	}
+	
+	public Customer(String CLIENT_ID,String LAST_NAME,String FIRST_NAME,String DATE_OF_BIRTH,String PHONE_NUMBER,String EMAIL){
+		
+		this.setCLIENT_ID(CLIENT_ID);
+		this.setLAST_NAME(LAST_NAME);
+		this.setFIRST_NAME(FIRST_NAME);
+		this.setDATE_OF_BIRTH(DATE_OF_BIRTH);
+		this.setPHONE_NUMBER(PHONE_NUMBER);
+		this.setEMAIL(EMAIL);
+	}
 
 	public String getCLIENT_ID() {
 		return CLIENT_ID;

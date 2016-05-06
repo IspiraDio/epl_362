@@ -4,6 +4,7 @@ package Dada_Base_Connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class DBConnection {
@@ -55,6 +56,31 @@ public class DBConnection {
 		}
 		return conn;
 	}
+	
+	public static void closeConnection(Connection conn) {
+        try {
+            if (null != conn) {
+                conn.close();
+                conn = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+	
+
+    public static void closeStatement(Statement stmt) {
+        try {
+            if (null != stmt) {
+                stmt.close();
+                stmt = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
 	
 //	public static void main(String[] args) throws SQLException{
 //		

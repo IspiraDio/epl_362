@@ -1,20 +1,27 @@
 package Server;
 
 
+ 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.NetworkInterface;
+ 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.CallableStatement;
+ 
 import java.sql.Connection;
+ 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+ 
+
 import com.google.gson.Gson;
+
+ 
 
 import java.util.ArrayList;
 
@@ -25,7 +32,17 @@ public class MultiThreadedSocketServer {
 
 	Connection conn = null;
 	 
+	public MultiThreadedSocketServer() {
+		try {
+			 
+			myServerSocket = new ServerSocket(2000);
 	 
+		} catch (IOException ioe) {
+			System.out.println("Could not create server socket on port 1000. Quitting.");
+			System.exit(-1);
+		}
+ 
+	}
 	
 
 	public MultiThreadedSocketServer(Connection conn) {
@@ -33,6 +50,7 @@ public class MultiThreadedSocketServer {
 			this.conn = conn;
 			 
 			myServerSocket = new ServerSocket(2000);
+	 
 		} catch (IOException ioe) {
 			System.out.println("Could not create server socket on port 1000. Quitting.");
 			System.exit(-1);
@@ -96,6 +114,20 @@ public class MultiThreadedSocketServer {
 		}
 	}
 
+	public boolean CheckServer(){
+		if(myServerSocket.isBound())
+			return true;
+		return false;
+	}
+	
+	public void CloseServer(){
+		try {
+			myServerSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	class ClientServiceThread extends Thread {
 
 		Socket myClientSocket;
@@ -116,8 +148,7 @@ public class MultiThreadedSocketServer {
 			// and a PrintWriter as shown below.
 			BufferedReader in = null;
 			PrintWriter out = null;
-			String to_do;
-
+ 
 			// Print out details of this connection
 			System.out
 					.println("Accepted Client Address - " + myClientSocket.getInetAddress().getHostName() + " MAC - ");
@@ -148,7 +179,7 @@ public class MultiThreadedSocketServer {
 					}
 
 					if (clientCommand != null) {
-						String[] clientArgv = clientCommand.split(" ");
+//						String[] clientArgv = clientCommand.split(" ");
 						
 						Gson gson = new Gson();
 						String cmd = gson.fromJson(clientCommand,Comant.class).getCOMANT();
@@ -350,8 +381,23 @@ public class MultiThreadedSocketServer {
  					    	out.println(reports.get_client_rec_month(gson.fromJson(clientCommand,Customer.class).getCLIENT_ID()));
 							out.flush();
 					    }
-					    
-					    
+					    else  if(cmd.equals("JUnit test")){					    	
+					    	Comant comant=new Comant(gson.fromJson(clientCommand,Comant.class).getCOMANT());			
+					     
+ 					    	out.println(comant.getCOMANT());
+							out.flush();
+					    }
+					    else  if(cmd.equals("getBranchDayReport")){					    	
+					    	Reports reports=new Reports();					    	 	
+ 					    	out.println(reports.get_branch_day());
+							out.flush();
+					    }
+					    else  if(cmd.equals("getCustomerNotAttend")){	
+							  
+					    	Customer customer=new Customer();	  
+					    	out.println(customer.get_clients_not_attend());
+							out.flush();
+					    }
 					    
 					    
 						

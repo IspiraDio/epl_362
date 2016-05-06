@@ -75,6 +75,53 @@ public class Reports {
 		return "err";
 	}
 	
+	public String get_branch_day() {
+
+		Reports[] result = null;
+		String jsonout = null;
+		Gson gson = new Gson();
+		String jsonfinal = "";
+		Connection conn = null;
+		CallableStatement cstmt = null;
+
+		try {
+			conn = DBConnection.getDBConnection();
+			cstmt = conn.prepareCall("{call SP_CLIENT_BRANCH_DAY()}");
+
+			cstmt.execute();
+
+			ResultSet rs;
+			rs = (ResultSet) cstmt.getResultSet();
+
+			ArrayList<Reports> arrayList = new ArrayList<Reports>();
+
+			while (rs.next()) {
+				arrayList.add(new Reports(rs.getString(1), rs.getString(2), rs.getString(3)));
+			}
+
+			result = (Reports[]) arrayList.toArray(new Reports[arrayList.size()]);
+			rs.close();
+
+			for (int i = 0; i < result.length; i++) {
+				jsonout = gson.toJson(result[i]);
+				jsonfinal = jsonfinal.concat(jsonout + "\n");
+			}
+
+			return jsonfinal;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return "err";
+	}
+	
 	public String get_client_rec_month(String CLIENT_ID) {
 
 		Reports[] result = null;

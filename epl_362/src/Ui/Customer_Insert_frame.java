@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -36,24 +37,19 @@ public class Customer_Insert_frame extends JFrame {
  
 	public Customer_Insert_frame() {		
 		initialize();
-		 
 	}
 	
 	public void showUserInterface(boolean set){
          setVisible(set);
     }
 	
-	
-	 
 	/**
 	 * Create the frame.
 	 */
 	private void initialize() {
 		
- 
-	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 317);
 		frame = new JPanel();
 		frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(frame);
@@ -128,8 +124,15 @@ public class Customer_Insert_frame extends JFrame {
 				String PHONE_NUMBER=pn_tb.getText();
 				String EMAIL=em_tb.getText();
 				
-				/* elexos gia kena */
-				
+				/* check for all the values*/
+				if (CLIENT_ID.equals("") ||LAST_NAME.equals("") ||FIRST_NAME.equals("") || DATE_OF_BIRTH.equals("")  || PHONE_NUMBER.equals("") || EMAIL.equals("")){
+					JOptionPane.showMessageDialog(frame,
+						    "Please fill all the fields",
+						    "Invalid insert",
+						    JOptionPane.WARNING_MESSAGE);
+				}
+				else{
+					
 				String COMANT="insertCustomer";
 				
 				Gson gson = new Gson();
@@ -137,11 +140,9 @@ public class Customer_Insert_frame extends JFrame {
 				String jsonout = gson.toJson(result);
 				
 				System.out.println(jsonout);
-			
 				
 				  String sentence;
 				  String modifiedSentence;
-				  BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
 				  Socket clientSocket;
 				try {
 				  clientSocket = new Socket("10.16.4.175", 2000);
@@ -161,10 +162,10 @@ public class Customer_Insert_frame extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				}
 			}
 		});
-		btnInsert.setBounds(12, 238, 117, 25);
+		btnInsert.setBounds(12, 227, 117, 25);
 		frame.add(btnInsert);
 		
 		JButton btnClear = new JButton("Clear");
@@ -178,7 +179,7 @@ public class Customer_Insert_frame extends JFrame {
 				em_tb.setText("");
 			}
 		});
-		btnClear.setBounds(154, 238, 117, 25);
+		btnClear.setBounds(140, 227, 117, 25);
 		frame.add(btnClear);
 	}
 }
