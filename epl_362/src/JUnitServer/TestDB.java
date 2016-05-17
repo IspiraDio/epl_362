@@ -1,10 +1,11 @@
-package JUnit;
+package JUnitServer;
 
 import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+ 
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,12 +27,13 @@ public class TestDB {
 		DBConnection.closeConnection(connection);
 	}
 
-	@Test
+	@Test  
 	public void closeStatementShouldCloseStatement() {
 		Statement statement;
 		try {
 			statement = connection.createStatement();
 			DBConnection.closeStatement(statement);
+		 
 			assertTrue(statement.isClosed());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -44,5 +46,7 @@ public class TestDB {
 	public void closeStatementWithNullShouldNotThrow() {
 		DBConnection.closeStatement(null);
 	}
+	
+
 
 }
